@@ -1,0 +1,39 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["jest", "testing-library", "@typescript-eslint"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended",
+    "plugin:testing-library/react",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "jest": {
+      "version": 27
+    }
+  },
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "no-empty-function": ["error"],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-namespace": 0
+  }
+}
