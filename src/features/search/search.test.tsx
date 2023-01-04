@@ -17,3 +17,8 @@ test('can user result exists in the document', () => {
   render(<SearchPage />)
   expect(screen.getByText(/wallace oliveira/i)).toBeInTheDocument()
 })
+
+test('user can see the repositories list in the document', () => {
+  render(<SearchPage />)
+  expect(screen.getByText(/expressive/i)).toBeInTheDocument()
+})
