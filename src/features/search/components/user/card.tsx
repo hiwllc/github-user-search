@@ -1,12 +1,7 @@
 import styled from 'styled-components'
+import { Card } from '../../../../components'
 
-export const UserCard = styled.article`
-  gap: 1rem;
-  width: 100%;
-  display: grid;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: white;
+export const UserCard = styled(Card)`
   grid-template-columns: 60px 1fr;
 
   @media (min-width: 768px) {
