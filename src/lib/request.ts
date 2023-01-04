@@ -2,7 +2,7 @@ export async function request(url: string, options?: RequestInit) {
   return fetch(url, options)
 }
 
-export async function get(url: string) {
+export async function get<T>(url: string): Promise<T> {
   const response = await request(url, { method: 'GET' })
   const data = await response.json()
 
@@ -14,8 +14,6 @@ export async function get(url: string) {
     return Promise.reject(new Error(`No user found with this username.`))
   }
 
-  if (!response.ok) {
-    const error = new Error(data.message ?? 'unknown')
-    return Promise.reject(error)
-  }
+  const error = new Error(data.message ?? 'unknown')
+  return Promise.reject(error)
 }
