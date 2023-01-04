@@ -3,9 +3,8 @@ import styled from 'styled-components'
 export const Main = styled.main`
   width: 100%;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 2rem 1rem;
   display: grid;
-  place-items: center;
-  padding: 32px 0;
+  place-items: flex-start center;
   background-color: #f7fafc;
 `
