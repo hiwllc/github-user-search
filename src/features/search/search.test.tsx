@@ -12,3 +12,8 @@ test('user can change the search input value', () => {
   expect(input).toBeInTheDocument()
   expect(input).toHaveValue('uselessdev')
 })
+
+test('can user result exists in the document', () => {
+  render(<SearchPage />)
+  expect(screen.getByText(/wallace oliveira/i)).toBeInTheDocument()
+})
