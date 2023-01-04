@@ -1,21 +1,5 @@
 import { DefaultBodyType, rest } from 'msw'
-
-type User = {
-  id: string
-  avatar_url: string
-  gravatar_id: string
-  html_url: string
-  repos_url: string
-  name: string
-  company: string
-  blog: string
-  location: string
-  email: string
-  bio: string
-  twitter_username: string
-  created_at: string
-  at: string
-}
+import { User } from '../features/search/types'
 
 export const handlers = [
   rest.get<DefaultBodyType, User>(
@@ -25,6 +9,7 @@ export const handlers = [
         ctx.status(200),
         ctx.json({
           id: 583231,
+          login: 'octocat',
           avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4',
           gravatar_id: '',
           html_url: 'https://github.com/octocat',
