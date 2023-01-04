@@ -1,24 +1,23 @@
-import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { SearchPage } from './pages'
+import { render, screen, waitForElementToBeRemoved } from '../../test-renders'
+import App from '../../App'
 
-test('user can change the search input value', () => {
-  render(<SearchPage />)
+test('should search by github user', async () => {
+  render(<App />)
+
+  expect(screen.getByText(/nenhuma busca ainda/i)).toBeInTheDocument()
 
   const input = screen.getByPlaceholderText(/procure por um usuário do github/i)
-
-  userEvent.type(input, `uselessdev`)
-
   expect(input).toBeInTheDocument()
-  expect(input).toHaveValue('uselessdev')
-})
 
-test('can user result exists in the document', () => {
-  render(<SearchPage />)
-  expect(screen.getByText(/wallace oliveira/i)).toBeInTheDocument()
-})
+  userEvent.type(input, 'octocat')
+  expect(input).toHaveValue('octocat')
 
-test('user can see the repositories list in the document', () => {
-  render(<SearchPage />)
-  expect(screen.getByText(/expressive/i)).toBeInTheDocument()
+  userEvent.click(screen.getByText(/buscar/i))
+
+  await waitForElementToBeRemoved(() =>
+    screen.queryByText(/nenhuma busca ainda/i)
+  )
+
+  expect(screen.getByText(/the octocat/i)).toBeInTheDocument()
 })

@@ -19,3 +19,11 @@ export type User = {
 export type ActionType = 'search/user' | 'search/repositories'
 
 export type ActionPayload = User
+
+export type Action = {
+  type: ActionType
+  payload: {
+    data: User
+    status: string
+  }
+}
