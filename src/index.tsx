@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import App from './App'
 import { CSSReset } from './components/css-reset'
 import reportWebVitals from './reportWebVitals'
-import store from './lib/store'
+import { store } from './lib/store'
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
