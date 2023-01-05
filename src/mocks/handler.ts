@@ -26,4 +26,22 @@ export const handlers = [
       )
     }
   ),
+
+  rest.get('https://api.github.com/users/octocat/repos', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          id: 132935648,
+          name: 'boysenberry-repo-1',
+          html_url: 'https://github.com/octocat/boysenberry-repo-1',
+          description: 'Testing',
+          created_at: '2018-05-10T17:51:29Z',
+          stargazers_count: 123,
+          language: null,
+          topics: [],
+        },
+      ])
+    )
+  }),
 ]

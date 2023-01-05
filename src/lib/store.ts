@@ -1,24 +1,26 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { searchUserReducer, User } from '../features/search'
+import { Repository, searchUserReducer, User } from '../features/search'
 
 export type Status = 'idle' | 'success' | 'fetching'
 
 export type RootState = {
-  user: {
-    data: User | null
+  data: {
+    user: User | null
+    repositories: Repository[] | null
     status: Status
   }
 }
 
 const reducers = combineReducers({
-  user: searchUserReducer,
+  data: searchUserReducer,
 })
 
 export const initialState: RootState = {
-  user: {
-    data: null,
+  data: {
+    repositories: [],
     status: 'idle',
+    user: null,
   },
 }
 

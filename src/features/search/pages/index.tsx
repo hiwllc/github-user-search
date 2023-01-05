@@ -5,6 +5,12 @@ import { EmptyState } from '../../../components/empty-state'
 import { RootState } from '../../../lib/store'
 import { searchUser } from '../actions/search'
 import {
+  Repository,
+  RepositoryDescription,
+  RepositoryLink,
+  RepositoryMetadata,
+  RepositoryName,
+  RepositoryTag,
   SearchButton,
   SearchForm,
   SearchIcon,
@@ -20,7 +26,9 @@ import {
 
 export const SearchPage = () => {
   const [term, setTerm] = React.useState('')
-  const { user } = useSelector((state: RootState) => state)
+  const {
+    data: { repositories, status, user },
+  } = useSelector((state: RootState) => state)
   const dispatch = useDispatch()
 
   const handleSearchTerm = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,25 +54,45 @@ export const SearchPage = () => {
         <SearchButton>Buscar</SearchButton>
       </SearchForm>
 
-      {user.status === 'idle' ? (
-        <EmptyState>Nenhuma busca ainda.</EmptyState>
-      ) : null}
+      {status === 'idle' ? <EmptyState>Nenhuma busca ainda.</EmptyState> : null}
 
-      {Boolean(user.data) ? (
+      {Boolean(user) ? (
         <UserCard>
-          <UserImage src={user.data?.avatar_url} alt={user.data?.name} />
+          <UserImage src={user?.avatar_url} alt={user?.name} />
           <UserHeader>
-            <UserName>{user.data?.name}</UserName>
+            <UserName>{user?.name}</UserName>
             <Flex>
-              <UserHandler href={user?.data?.html_url}>
-                @{user.data?.login}
-              </UserHandler>
-              <UserEmail>{user.data?.email ?? 'Sem e-mail público'}</UserEmail>
+              <UserHandler href={user?.html_url}>@{user?.login}</UserHandler>
+              <UserEmail>{user?.email ?? 'Sem e-mail público'}</UserEmail>
             </Flex>
-            <UserBio>{user.data?.bio ?? 'Esse usuário não tem bio.'}</UserBio>
+            <UserBio>{user?.bio ?? 'Esse usuário não tem bio.'}</UserBio>
           </UserHeader>
         </UserCard>
       ) : null}
+
+      {Boolean(repositories?.length)
+        ? repositories?.map(repository => (
+            <Repository key={repository.id}>
+              <RepositoryName>
+                <RepositoryLink href={repository.html_url}>
+                  {repository.name}
+                </RepositoryLink>
+              </RepositoryName>
+              <RepositoryDescription>
+                {repository.description}
+              </RepositoryDescription>
+              <Flex>
+                {repository.topics.map(topic => (
+                  <RepositoryTag key={topic}>{topic}</RepositoryTag>
+                ))}
+              </Flex>
+              <RepositoryMetadata>
+                <span>{repository.language}</span>
+                <span>{repository.stargazers_count}</span>
+              </RepositoryMetadata>
+            </Repository>
+          ))
+        : null}
     </Layout>
   )
 }

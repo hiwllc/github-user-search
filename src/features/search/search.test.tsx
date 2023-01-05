@@ -19,5 +19,9 @@ test('should search by github user', async () => {
     screen.queryByText(/nenhuma busca ainda/i)
   )
 
-  expect(screen.getByText(/the octocat/i)).toBeInTheDocument()
+  const cardUser = await screen.findByText(/the octocat/i)
+  const cardRepository = await screen.findByText(/boysenberry-repo-1/)
+
+  expect(cardUser).toBeInTheDocument()
+  expect(cardRepository).toBeInTheDocument()
 })

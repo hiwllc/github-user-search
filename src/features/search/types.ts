@@ -1,3 +1,5 @@
+import { Status } from '../../lib/store'
+
 export type User = {
   id: string
   login: string
@@ -16,14 +18,24 @@ export type User = {
   at: string
 }
 
-export type ActionType = 'search/user' | 'search/repositories'
+export type Repository = {
+  id: string
+  name: string
+  html_url: string
+  description: string
+  created_at: string
+  stargazers_count: number
+  language: string
+  topics: string[]
+}
 
-export type ActionPayload = User
+export type ActionType = 'search/user'
 
 export type Action = {
   type: ActionType
   payload: {
-    data: User
-    status: string
+    user: User
+    repositories: Repository[]
+    status: Status
   }
 }
