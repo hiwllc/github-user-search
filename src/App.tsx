@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Layout } from './components'
+import { HistoryPage } from './features/history'
 import { SearchPage } from './features/search'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout links={links} />}>
         <Route index element={<SearchPage />} />
+        <Route path="/historico" element={<HistoryPage />} />
       </Route>
     </Routes>
   )
