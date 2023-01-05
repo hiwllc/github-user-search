@@ -19,8 +19,8 @@ export function HistoryPage() {
       {Boolean(history.length) ? (
         <Card>
           <List>
-            {history.map(item => (
-              <ListItem key={item.date}>
+            {history.map((item, index) => (
+              <ListItem key={`${item.date}-${index}`}>
                 <ListLink to={`/?search=${item.term}`}>
                   <span>{item.term}</span>
                 </ListLink>
