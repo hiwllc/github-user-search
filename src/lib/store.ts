@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Repository, searchUserReducer, User } from '../features/search'
 
-export type Status = 'idle' | 'success' | 'fetching'
+export type Status = 'idle' | 'success' | 'fetching' | 'error'
 
 export type RootState = {
   data: {

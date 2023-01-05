@@ -9,10 +9,21 @@ export function searchUser(username: string) {
       `https://api.github.com/users/${username}/repos`
     )
 
+    if (typeof user === 'string') {
+      return dispatch({
+        type: 'search/error',
+        payload: {
+          repositories: null,
+          user: null,
+          status: 'error',
+        },
+      })
+    }
+
     return dispatch({
       type: 'search/user',
       payload: {
-        repositories: repositories ?? [],
+        repositories: (repositories ?? []) as Repository[],
         user: user ?? null,
         status: 'success',
       },

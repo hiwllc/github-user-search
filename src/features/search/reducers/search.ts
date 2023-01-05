@@ -4,6 +4,8 @@ export function searchUserReducer(state = {}, action: Action) {
   switch (action.type) {
     case 'search/user':
       return { ...state, ...action.payload }
+    case 'search/error':
+      return { ...state, ...action.payload }
     default:
       return state
   }

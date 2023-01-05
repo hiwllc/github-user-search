@@ -24,4 +24,16 @@ test('should search by github user', async () => {
 
   expect(cardUser).toBeInTheDocument()
   expect(cardRepository).toBeInTheDocument()
+
+  // @ts-expect-error setSelectionRange has no types in html elements
+  input.setSelectionRange(0, 7)
+
+  userEvent.type(input, '{backspace}nouser')
+  userEvent.click(screen.getByText(/buscar/i))
+
+  const notFound = await screen.findByText(/nenhum usuário encontrado/i)
+
+  expect(notFound).toBeInTheDocument()
+  expect(cardUser).not.toBeInTheDocument()
+  expect(cardRepository).not.toBeInTheDocument()
 })

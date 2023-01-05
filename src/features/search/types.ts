@@ -29,13 +29,13 @@ export type Repository = {
   topics: string[]
 }
 
-export type ActionType = 'search/user'
+export type ActionType = 'search/user' | 'search/error'
 
 export type Action = {
   type: ActionType
   payload: {
-    user: User
-    repositories: Repository[]
+    user: User | null
+    repositories: Repository[] | null
     status: Status
   }
 }

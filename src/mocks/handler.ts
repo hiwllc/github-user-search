@@ -87,4 +87,15 @@ export const handlers = [
       ])
     )
   }),
+
+  rest.get<DefaultBodyType, User>(
+    'https://api.github.com/users/nouser',
+    (req, res, ctx) => {
+      return res(ctx.status(404), ctx.json({}))
+    }
+  ),
+
+  rest.get('https://api.github.com/users/nouser/repos', (req, res, ctx) => {
+    return res(ctx.status(404), ctx.json([]))
+  }),
 ]

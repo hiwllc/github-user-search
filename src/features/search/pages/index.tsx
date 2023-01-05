@@ -88,6 +88,10 @@ export const SearchPage = () => {
 
       {status === 'idle' ? <EmptyState>Nenhuma busca ainda.</EmptyState> : null}
 
+      {status === 'error' ? (
+        <EmptyState>Nenhum usuário encontrado.</EmptyState>
+      ) : null}
+
       {Boolean(user) ? (
         <UserCard>
           <UserImage src={user?.avatar_url} alt={user?.name} />
