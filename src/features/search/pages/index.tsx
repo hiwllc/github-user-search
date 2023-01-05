@@ -24,9 +24,15 @@ import {
   UserImage,
   UserName,
 } from '../components'
+import { useLocalStorage } from '../../../hooks/use-localstorage'
 
 export const SearchPage = () => {
   const [term, setTerm] = React.useState('')
+  const { value, save } = useLocalStorage<{ term: string; date: string }[]>(
+    'github-search',
+    []
+  )
+
   const {
     data: { repositories, status, user },
   } = useSelector((state: RootState) => state)
@@ -41,6 +47,18 @@ export const SearchPage = () => {
     // @ts-expect-error Dispatch is not assignable of type 'AnyAction'
     dispatch(searchUser(term))
   }
+
+  // lets save the search in localStorage
+  React.useEffect(() => {
+    if (status === 'success' && Boolean(term.length)) {
+      save([...value, { term, date: user?.at as string }])
+    }
+    // não passamos o term nem o save aqui pra evitar salvar no
+    // no histórico buscas não realizadas (caso do term). E evitar
+    // loop infinito (caso do save)
+    // idealmente nós tratariamos esses estados em outro local.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, user])
 
   return (
     <>
