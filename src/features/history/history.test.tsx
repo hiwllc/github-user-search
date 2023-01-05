@@ -30,4 +30,24 @@ test('should search by github user and see history', async () => {
 
   expect(screen.getByText(/octocat/i)).toBeInTheDocument()
   expect(screen.getByText(/há 10 segundos/)).toBeInTheDocument()
+
+  userEvent.click(screen.getByRole(/link/, { name: /busca/i }))
+  userEvent.type(
+    screen.getByPlaceholderText(/procure por um usuário do github/i),
+    'octodog'
+  )
+  userEvent.click(screen.getByText(/buscar/i))
+
+  await screen.findByText(/the octodog/i)
+
+  expect(screen.getByText(/the octodog/i)).toBeInTheDocument()
+  expect(screen.getByText(/a repository/i)).toBeInTheDocument()
+
+  jest.advanceTimersByTime(10000)
+
+  userEvent.click(screen.getByRole(/link/, { name: /histórico/i }))
+  userEvent.click(screen.getByText(/octocat/i))
+
+  await screen.findByText(/the octocat/i)
+  expect(screen.getByText(/the octocat/i)).toBeInTheDocument()
 })

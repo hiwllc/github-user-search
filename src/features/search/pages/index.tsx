@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { CodeBracketIcon, StarIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { Flex } from '../../../components'
 import { EmptyState } from '../../../components/empty-state'
 import { RootState } from '../../../lib/store'
@@ -27,7 +28,11 @@ import {
 import { useLocalStorage } from '../../../hooks/use-localstorage'
 
 export const SearchPage = () => {
-  const [term, setTerm] = React.useState('')
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const search = queryParams.get('search')
+
+  const [term, setTerm] = React.useState(search ?? '')
   const { value, save } = useLocalStorage<{ term: string; date: string }[]>(
     'github-search',
     []
@@ -50,7 +55,7 @@ export const SearchPage = () => {
 
   // lets save the search in localStorage
   React.useEffect(() => {
-    if (status === 'success' && Boolean(term.length)) {
+    if (status === 'success' && Boolean(term.length) && search !== term) {
       save([...value, { term, date: user?.at as string }])
     }
     // não passamos o term nem o save aqui pra evitar salvar no
@@ -58,7 +63,15 @@ export const SearchPage = () => {
     // loop infinito (caso do save)
     // idealmente nós tratariamos esses estados em outro local.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, user])
+  }, [status, user, search])
+
+  React.useEffect(() => {
+    if (search) {
+      // @ts-expect-error Dispatch is not assignable of type 'AnyAction'
+      dispatch(searchUser(search))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search])
 
   return (
     <>

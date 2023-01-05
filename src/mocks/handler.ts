@@ -27,6 +27,31 @@ export const handlers = [
     }
   ),
 
+  rest.get<DefaultBodyType, User>(
+    'https://api.github.com/users/octodog',
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: 583231,
+          login: 'octodog',
+          avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4',
+          gravatar_id: '',
+          html_url: 'https://github.com/octodog',
+          repos_url: 'https://api.github.com/users/octodog/repos',
+          name: 'The Octodog',
+          company: '@github',
+          blog: 'https://github.blog',
+          location: 'San Francisco',
+          email: null,
+          bio: null,
+          twitter_username: null,
+          created_at: '2011-01-25T18:44:36Z',
+        })
+      )
+    }
+  ),
+
   rest.get('https://api.github.com/users/octocat/repos', (req, res, ctx) => {
     return res(
       ctx.status(200),
@@ -34,6 +59,24 @@ export const handlers = [
         {
           id: 132935648,
           name: 'boysenberry-repo-1',
+          html_url: 'https://github.com/octocat/boysenberry-repo-1',
+          description: 'Testing',
+          created_at: '2018-05-10T17:51:29Z',
+          stargazers_count: 123,
+          language: null,
+          topics: [],
+        },
+      ])
+    )
+  }),
+
+  rest.get('https://api.github.com/users/octodog/repos', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json([
+        {
+          id: 132935648,
+          name: 'a repository',
           html_url: 'https://github.com/octocat/boysenberry-repo-1',
           description: 'Testing',
           created_at: '2018-05-10T17:51:29Z',
