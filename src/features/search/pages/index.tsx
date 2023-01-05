@@ -1,6 +1,7 @@
 import * as React from 'react'
+import { CodeBracketIcon, StarIcon } from '@heroicons/react/24/outline'
 import { useSelector, useDispatch } from 'react-redux'
-import { Flex, Layout } from '../../../components'
+import { Flex } from '../../../components'
 import { EmptyState } from '../../../components/empty-state'
 import { RootState } from '../../../lib/store'
 import { searchUser } from '../actions/search'
@@ -42,7 +43,7 @@ export const SearchPage = () => {
   }
 
   return (
-    <Layout>
+    <>
       <SearchForm as="form" onSubmit={handleSearchSubmit}>
         <SearchIcon />
         <SearchInput
@@ -87,12 +88,20 @@ export const SearchPage = () => {
                 ))}
               </Flex>
               <RepositoryMetadata>
-                <span>{repository.language}</span>
-                <span>{repository.stargazers_count}</span>
+                {repository.language ? (
+                  <span>
+                    <CodeBracketIcon width={16} height={16} />{' '}
+                    {repository.language}
+                  </span>
+                ) : null}
+                <span>
+                  <StarIcon width={16} height={16} />
+                  {repository.stargazers_count}
+                </span>
               </RepositoryMetadata>
             </Repository>
           ))
         : null}
-    </Layout>
+    </>
   )
 }
